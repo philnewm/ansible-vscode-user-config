@@ -25,6 +25,7 @@
     cmd: code --list-extensions
   register: extensions_query_result
   changed_when: false
+  failed_when: false
 
 - name: Set extensions list
   ansible.builtin.set_fact:
