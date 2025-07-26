@@ -1,5 +1,51 @@
 ---
 
 state: present
+user: "vagrant"
+
+vscode_extensions:
+  - "aaron-bond.better-comments"
+  - "davidanson.vscode-markdownlint"
+  - "github.copilot"
+  - "github.vscode-github-actions"
+  - "gruntfuggly.todo-tree"
+  - "hashicorp.hcl"
+  - "mhutchie.git-graph"
+  - "ms-vscode-remote.remote-ssh"
+  - "ms-vscode-remote.remote-ssh-edit"
+  - "ms-vscode.hexeditor"
+  - "ms-vscode.remote-explorer"
+  - "njpwerner.autodocstring"
+  - "oderwat.indent-rainbow"
+  - "redhat.vscode-yaml"
+  - "shinotatwu-ds.file-tree-generator"
+  - "valentjn.vscode-ltex"
+
+ansible_extensions:
+  - "redhat.ansible"
+
+cpp_extensions:
+  - "ms-vscode.cmake-tools"
+  - "ms-vscode.cpptools"
+  - "ms-vscode.cpptools-extension-pack"
+  - "ms-vscode.cpptools-themes"
+  - "ms-vscode.makefile-tools"
+
+container_extensions:
+  - "docker.docker"
+  - "ms-azuretools.vscode-containers"
+  - "ms-azuretools.vscode-docker"
+  - "ms-vscode-remote.remote-containers"
+  - "onnovalkering.vscode-singularity"
+
+python_extensions:
+  - "ms-python.debugpy"
+  - "ms-python.python"
+  - "ms-python.vscode-pylance"
+  - "ms-python.vscode-python-envs"
+
+maya_extensions:
+  - "fxtd-odyssey.mayapy"
+  - "saviof.mayacode"
 
 ...

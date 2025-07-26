@@ -11,4 +11,31 @@
 - name: Gather package facts
   ansible.builtin.package_facts:
 
+- name: Check if VSCode is present and accessible
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.command:
+    cmd: code --version
+  changed_when: false
+
+- name: Get installed extensions
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.command:
+    cmd: code --list-extensions
+  register: extensions_query_result
+  changed_when: false
+
+- name: Set extensions list
+  ansible.builtin.set_fact:
+    present_extensions: "{{ extensions_query_result.stdout_lines }}"
+
+- name: Install extensions
+  loop: "{{ vscode_extensions }}"
+  when: item not in present_extensions
+  ansible.builtin.command:
+    cmd: "code --install-extension {{ item }}"
+  register: ext_install_result
+  changed_when: ext_install_result.rc == 0
+
 ...
