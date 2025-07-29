@@ -1,0 +1,61 @@
+---
+
+- name: Ensure VS Code settings directory exists
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.file:
+    path: "{{ vscode_user_settings_path }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: Combine enabled vscode settings
+  ansible.builtin.set_fact:
+    vscode_combined_settings: >-
+      {{
+        vscode_settings
+        | dict2items
+        | selectattr('key', 'in', ['default'] + vscode_features)
+        | map(attribute='value')
+        | list
+        | combine
+      }}
+
+- name: Check if VS Code settings.json exists
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.stat:
+    path: "{{ vscode_user_settings_path }}/settings.json"
+  register: vscode_settings_file
+
+- name: Load existing settings.json (if it exists)
+  become: true
+  become_user: "{{ user }}"
+  when: vscode_settings_file.stat.exists
+  ansible.builtin.slurp:
+    path: "{{ vscode_user_settings_path }}/settings.json"
+  register: vscode_existing_settings_raw
+
+- name: Parse existing VS Code settings (if present)
+  when: vscode_settings_file.stat.exists
+  ansible.builtin.set_fact:
+    vscode_existing_settings: "{{ vscode_existing_settings_raw.content | b64decode | from_json }}"
+
+- name: Merge VS Code settings with provided config
+  ansible.builtin.set_fact:
+    vscode_merged_settings: >-
+      {{
+        vscode_existing_settings | default({}) |
+        combine(vscode_combined_settings, recursive=True)
+      }}
+
+- name: Write settings
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.copy:
+    content: "{{ vscode_merged_settings | to_nice_json(indent=2) }}"
+    dest: "{{ vscode_user_settings_path }}/settings.json"
+    mode: "0644"
+
+...

@@ -7,7 +7,6 @@
     name: python-apt-common
     state: present
 
-# INFO This task may be obsolete for your use-case
 - name: Gather package facts
   ansible.builtin.package_facts:
 
@@ -18,25 +17,19 @@
     cmd: code --version
   changed_when: false
 
-- name: Get installed extensions
-  become: true
-  become_user: "{{ user }}"
-  ansible.builtin.command:
-    cmd: code --list-extensions
-  register: extensions_query_result
-  changed_when: false
-  failed_when: false
+- name: Prepare settings
+  when: vscode_extensions
+  ansible.builtin.include_tasks:
+    file: settings.yml
 
-- name: Set extensions list
-  ansible.builtin.set_fact:
-    present_extensions: "{{ extensions_query_result.stdout_lines }}"
+- name: Set up extensions
+  when: vscode_extensions
+  ansible.builtin.include_tasks:
+    file: extensions.yml
 
-- name: Install extensions
-  loop: "{{ vscode_extensions }}"
-  when: item not in present_extensions
-  ansible.builtin.command:
-    cmd: "code --install-extension {{ item }}"
-  register: ext_install_result
-  changed_when: ext_install_result.rc == 0
+- name: Add vscode to gnome favorites
+  when: "'gnome-shell' in ansible_facts.packages and vscode_gnome_favorite"
+  ansible.builtin.include_tasks:
+    file: favorite.yml
 
 ...

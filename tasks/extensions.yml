@@ -1,0 +1,38 @@
+---
+
+- name: Get installed extensions
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.command:
+    cmd: code --list-extensions
+  register: extensions_query_result
+  changed_when: false
+  failed_when: false
+
+- name: Set extensions list
+  ansible.builtin.set_fact:
+    present_extensions: "{{ extensions_query_result.stdout_lines }}"
+
+- name: Combine enabled vscode extensions
+  ansible.builtin.set_fact:
+    vscode_combined_extensions: >-
+      {{
+        vscode_features
+        | map('extract', vscode_extensions)
+        | reject('equalto', None)
+        | list
+        | flatten
+        | unique
+      }}
+
+- name: Install extensions
+  become: true
+  become_user: "{{ user }}"
+  loop: "{{ vscode_combined_extensions }}"
+  when: item not in present_extensions
+  ansible.builtin.command:
+    cmd: "code --install-extension {{ item }}"
+  register: ext_install_result
+  changed_when: ext_install_result.rc == 0
+
+...

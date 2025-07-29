@@ -2,8 +2,7 @@
 
 galaxy_info:
   role_name: vscode_user_config
-  namespace: philnewm
-  author: author_name
+  author: philnewm
   description: ansible-role-template description
   license: some_license
   min_ansible_version: "2.1"
@@ -18,4 +17,4 @@ galaxy_info:
       versions:
         - "jammy"
   galaxy_tags: []
-dependencies: [philnewm.vscode]
+dependencies: []  # philnewm.vscode

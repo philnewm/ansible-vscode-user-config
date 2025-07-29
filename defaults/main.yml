@@ -2,50 +2,210 @@
 
 state: present
 user: "vagrant"
+vscode_features:
+  - default
+  - copilot
+  - python
+  - cpp
+  - container
+  - ansible
+
+vscode_user_settings_path: "/home/{{ user }}/.config/Code/User"
+vscode_gnome_favorite: true
+vscode_extensions: true
+vscode_launcher: "code.desktop"
+default_python_interpreter: "/usr/bin/python3.11"
+default_cpp_compiler: "/usr/bin/g++"
+
+vscode_settings:
+  default:
+    "editor.detectIndentation": true
+    "editor.find.addExtraSpaceOnTop": true
+    "editor.find.autoFindInSelection": "multiline"
+    "editor.find.findOnType": true
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace"
+    "editor.fontSize": 18
+    "editor.formatOnPaste": false
+    "editor.formatOnSave": false
+    "editor.minimap.autohide": true
+    "editor.minimap.maxColumn": 120
+    "editor.minimap.renderCharacters": false
+    "editor.minimap.scale": 1
+    "editor.minimap.sectionHeaderFontSize": 8
+    "editor.minimap.sectionHeaderLetterSpacing": 1
+    "editor.minimap.showSlider": "mouseover"
+    "editor.minimap.side": "right"
+    "editor.minimap.size": "proportional"
+    "editor.showUnused": true
+    "editor.quickSuggestions":
+      "comments": "on"
+    "editor.tabSize": 2
+    "editor.wordWrap": "on"
+    "files.associations":
+      "*.cpp": "cpp"
+      "*.py": "python"
+      "*.yaml": "yaml"
+      "*.json": "json"
+    "files.autoSave": "afterDelay"
+    "files.enableTrash": true
+    "files.encoding": "utf8"
+    "files.exclude":
+      "**/.git": true
+      "**/.svn": true
+      "**/.hg": true
+      "**/.DS_Store": true
+      "**/Thumbs.db": true
+    "files.insertFinalNewline": true
+    "files.trimFinalNewlines": true
+    "files.trimTrailingWhitespace": true
+    "files.readonlyFromPermissions": true
+    "workbench.editorLargeFileConfirmation": 1024
+    "workbench.colorTheme": "Default Dark Modern"
+    "workbench.iconTheme": "material-icon-theme"
+    "debug.console.fontSize": 14
+    "debug.console.lineHeight": 21
+    "debug.console.fontFamily": "Cascadia Code Light"
+    "terminal.integrated.fontSize": 14
+    "markdown.preview.fontSize": 16
+    "diffEditor.ignoreTrimWhitespace": false
+    "window.titleBarStyle": "native"
+    "indentRainbow.indicatorStyle": "light"
+    "indentRainbow.lightIndicatorStyleLineWidth": 3
+    "better-comments.tags": [
+      {
+          "tag": "!",
+          "color": "#FF2D00",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": false,
+          "italic": false
+      },
+      {
+          "tag": "?",
+          "color": "#DD55EE",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": true,
+          "italic": false
+      },
+      {
+          "tag": "//",
+          "color": "#474747",
+          "strikethrough": true,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": false,
+          "italic": false
+      },
+      {
+          "tag": "todo",
+          "color": "#FF8C00",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": true,
+          "italic": false
+      },
+      {
+          "tag": "*",
+          "color": "#98C379",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": false,
+          "italic": false
+      },
+      {
+          "tag": "warning",
+          "color": "#FF3300",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": true,
+          "italic": false
+      },
+      {
+          "tag": "info",
+          "color": "#22EEDD",
+          "strikethrough": false,
+          "underline": false,
+          "backgroundColor": "transparent",
+          "bold": false,
+          "italic": true
+      }
+    ]
+  copilot:
+    "github.copilot.enable":
+      "*": false
+      "plaintext": false
+      "markdown": false
+      "scminput": false
+  python:
+    "python.analysis.completeFunctionParens": true
+    "python.analysis.inlayHints.functionReturnTypes": true
+    "python.analysis.inlayHints.pytestParameters": true
+    "python.analysis.inlayHints.variableTypes": true
+    "python.analysis.typeCheckingMode": "strict"
+    "python.createEnvironment.trigger": "off"
+    "python.defaultInterpreterPath": "{{ default_python_interpreter }}"
+  ansible:
+    "ansible.python.interpreterPath": "{{ default_python_interpreter }}"
+  cpp:
+    "C_Cpp.intelliSenseEngine": "default"
+    "C_Cpp.default.compilerPath": "/usr/bin/g++"
+    "C_Cpp.autocompleteAddParentheses": true
+    "C_Cpp.vcFormat.indent.braces": true
+    "C_Cpp.vcFormat.indent.preserveComments": true
+    "C_Cpp.vcFormat.indent.preserveWithinParentheses": true
+    "C_Cpp.vcFormat.newLine.beforeOpenBrace.function": "newLine"
 
 vscode_extensions:
-  - "aaron-bond.better-comments"
-  - "davidanson.vscode-markdownlint"
-  - "github.copilot"
-  - "github.vscode-github-actions"
-  - "gruntfuggly.todo-tree"
-  - "hashicorp.hcl"
-  - "mhutchie.git-graph"
-  - "ms-vscode-remote.remote-ssh"
-  - "ms-vscode-remote.remote-ssh-edit"
-  - "ms-vscode.hexeditor"
-  - "ms-vscode.remote-explorer"
-  - "njpwerner.autodocstring"
-  - "oderwat.indent-rainbow"
-  - "redhat.vscode-yaml"
-  - "shinotatwu-ds.file-tree-generator"
-  - "valentjn.vscode-ltex"
-
-ansible_extensions:
-  - "redhat.ansible"
-
-cpp_extensions:
-  - "ms-vscode.cmake-tools"
-  - "ms-vscode.cpptools"
-  - "ms-vscode.cpptools-extension-pack"
-  - "ms-vscode.cpptools-themes"
-  - "ms-vscode.makefile-tools"
-
-container_extensions:
-  - "docker.docker"
-  - "ms-azuretools.vscode-containers"
-  - "ms-azuretools.vscode-docker"
-  - "ms-vscode-remote.remote-containers"
-  - "onnovalkering.vscode-singularity"
-
-python_extensions:
+  default:
+    - "aaron-bond.better-comments"
+    - "davidanson.vscode-markdownlint"
+    - "github.vscode-github-actions"
+    - "gruntfuggly.todo-tree"
+    - "hashicorp.hcl"
+    - "mhutchie.git-graph"
+    - "ms-vscode-remote.remote-ssh"
+    - "ms-vscode-remote.remote-ssh-edit"
+    - "ms-vscode.hexeditor"
+    - "ms-vscode.remote-explorer"
+    - "njpwerner.autodocstring"
+    - "oderwat.indent-rainbow"
+    - "redhat.vscode-yaml"
+    - "shinotatwu-ds.file-tree-generator"
+    - "valentjn.vscode-ltex"
+    - "pkief.material-icon-theme"
+  copilot:
+    - "github.copilot"
+  ansible:
+    - "redhat.ansible"
+  shell:
+    - timonwong.shellcheck
+  cpp:
+    - "ms-vscode.cmake-tools"
+    - "ms-vscode.cpptools"
+    - "ms-vscode.cpptools-extension-pack"
+    - "ms-vscode.cpptools-themes"
+    - "ms-vscode.makefile-tools"
+  container:
+    - "docker.docker"
+    - "ms-azuretools.vscode-containers"
+    - "ms-azuretools.vscode-docker"
+    - "ms-vscode-remote.remote-containers"
+    - "onnovalkering.vscode-singularity"
+  python:
   - "ms-python.debugpy"
   - "ms-python.python"
   - "ms-python.vscode-pylance"
   - "ms-python.vscode-python-envs"
 
-maya_extensions:
-  - "fxtd-odyssey.mayapy"
-  - "saviof.mayacode"
+# INFO move to maya role
+# maya:
+#   - "fxtd-odyssey.mayapy"
+#   - "saviof.mayacode"
 
 ...
