@@ -31,7 +31,8 @@
   loop: "{{ vscode_combined_extensions }}"
   when: item not in present_extensions
   ansible.builtin.command:
-    cmd: "code --install-extension {{ item }}"
+    # INFO without `--force` sometimes crashed on Ubuntu for `ms-python.vscode-python-envs`
+    cmd: "code --install-extension {{ item }} --force"
   register: ext_install_result
   changed_when: ext_install_result.rc == 0
 

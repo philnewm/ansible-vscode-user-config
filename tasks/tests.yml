@@ -1,3 +1,84 @@
 ---
 
+- name: Get Settings directory
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.stat:
+    path: "{{ vscode_user_settings_path }}"
+  register: vscode_settings_dir
+
+- name: Get Settings directory
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.stat:
+    path: "{{ vscode_user_settings_path }}/settings.json"
+  register: vscode_settings_file
+
+- name: Test settings directory
+  ansible.builtin.assert:
+    that:
+      - vscode_settings_dir.stat.isdir
+      - vscode_settings_file.stat.exists
+    fail_msg: "Failed to find vscode settings directory/file at {{ vscode_settings_dir }}/settings.json"
+    quiet: true
+
+- name: Combine enabled vscode settings
+  ansible.builtin.set_fact:
+    vscode_combined_settings: >-
+      {{
+        vscode_settings
+        | dict2items
+        | selectattr('key', 'in', ['default'] + vscode_features)
+        | map(attribute='value')
+        | list
+        | combine
+      }}
+
+- name: Read existing settings.json
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.slurp:
+    path: "{{ vscode_user_settings_path }}/settings.json"
+  register: vscode_existing_settings_raw
+
+- name: Parse existing VS Code settings
+  ansible.builtin.set_fact:
+    vscode_present_settings: "{{ vscode_existing_settings_raw.content | b64decode | from_json }}"
+
+- name: Test settings
+  loop: "{{ vscode_combined_settings | dict2items() }}"
+  ansible.builtin.assert:
+    that:
+      - vscode_present_settings[item.key] == item.value
+    fail_msg: "Expected '{{ item.value }}' for key '{{ item.key }}', but found: '{{ vscode_present_settings[item.key] }}'"
+    quiet: true
+
+- name: Get installed extensions
+  become: true
+  become_user: "{{ user }}"
+  ansible.builtin.command:
+    cmd: code --list-extensions
+  register: extensions_query_result
+  changed_when: false
+  failed_when: false
+
+- name: Combine enabled vscode extensions
+  ansible.builtin.set_fact:
+    vscode_combined_extensions: >-
+      {{
+        vscode_features
+        | map('extract', vscode_extensions)
+        | reject('equalto', None)
+        | list
+        | flatten
+        | unique
+      }}
+
+- name: Test installed extensions
+  loop: "{{ vscode_combined_extensions }}"
+  ansible.builtin.assert:
+    that:
+      - item in extensions_query_result.stdout_lines
+    quiet: true
+
 ...

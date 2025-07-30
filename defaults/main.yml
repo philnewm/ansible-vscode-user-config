@@ -59,6 +59,7 @@ vscode_settings:
     "files.trimFinalNewlines": true
     "files.trimTrailingWhitespace": true
     "files.readonlyFromPermissions": true
+    "workbench.startupEditor": "none"
     "workbench.editorLargeFileConfirmation": 1024
     "workbench.colorTheme": "Default Dark Modern"
     "workbench.iconTheme": "material-icon-theme"
