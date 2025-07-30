@@ -18,12 +18,11 @@
   changed_when: false
 
 - name: Prepare settings
-  when: vscode_extensions
   ansible.builtin.include_tasks:
     file: settings.yml
 
 - name: Set up extensions
-  when: vscode_extensions
+  when: vscode_extensions_enabled
   ansible.builtin.include_tasks:
     file: extensions.yml
 
