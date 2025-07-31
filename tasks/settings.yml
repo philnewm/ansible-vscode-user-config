@@ -7,8 +7,6 @@
     path: "{{ vscode_user_settings_path }}"
     state: directory
     mode: "0755"
-    owner: "{{ user }}"
-    group: "{{ user }}"
 
 - name: Combine enabled vscode settings
   ansible.builtin.set_fact:
