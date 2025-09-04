@@ -66,6 +66,7 @@ vscode_settings:
     "debug.console.fontSize": 14
     "debug.console.lineHeight": 21
     "debug.console.fontFamily": "Cascadia Code Light"
+    "debug.showVariableTypes": true
     "terminal.integrated.fontSize": 14
     "markdown.preview.fontSize": 16
     "diffEditor.ignoreTrimWhitespace": false
