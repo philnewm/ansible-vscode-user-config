@@ -12,7 +12,6 @@ vscode_features:
 
 vscode_user_settings_path: "/home/{{ user }}/.config/Code/User"
 vscode_extensions_enabled: true
-vscode_launcher: "code.desktop"
 default_python_interpreter: "/usr/bin/python3.11"
 default_cpp_compiler: "/usr/bin/g++"
 
