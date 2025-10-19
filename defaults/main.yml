@@ -11,7 +11,6 @@ vscode_features:
   - ansible
 
 vscode_user_settings_path: "/home/{{ user }}/.config/Code/User"
-vscode_gnome_favorite: true
 vscode_extensions_enabled: true
 vscode_launcher: "code.desktop"
 default_python_interpreter: "/usr/bin/python3.11"
@@ -199,10 +198,10 @@ vscode_extensions:
     - "ms-azuretools.vscode-docker"
     - "ms-vscode-remote.remote-containers"
   python:
-  - "ms-python.debugpy"
-  - "ms-python.python"
-  - "ms-python.vscode-pylance"
-  - "ms-python.vscode-python-envs"
+    - "ms-python.debugpy"
+    - "ms-python.python"
+    - "ms-python.vscode-pylance"
+    - "ms-python.vscode-python-envs"
 
 # INFO move to maya role
 # maya:
