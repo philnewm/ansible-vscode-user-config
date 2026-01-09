@@ -27,7 +27,7 @@
     path: "{{ vscode_user_settings_path }}/settings.json"
   register: vscode_settings_file
 
-- name: Load existing settings.json (if it exists)
+- name: Load existing settings.json
   become: true
   become_user: "{{ user }}"
   when: vscode_settings_file.stat.exists

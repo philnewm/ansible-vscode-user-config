@@ -5,9 +5,4 @@
     path: "{{ vscode_user_settings_path }}"
     state: "absent"
 
-- name: Remove unused dependencies
-  become: true
-  ansible.builtin.package:
-    autoremove: true
-
 ...

@@ -3,18 +3,21 @@
 galaxy_info:
   role_name: vscode_user_config
   author: philnewm
-  description: Configure vscoed user settings
+  description: Configure vscode user settings
   license: MIT
   min_ansible_version: "2.1"
   platforms:
     - name: EL
       versions:
         - "9"
+    - name: Fedora
+      versions:
+        - "43"
     - name: Debian
       versions:
-        - "bookworm"
+        - "trixie"
     - name: "Ubuntu"
       versions:
-        - "jammy"
+        - "noble"
   galaxy_tags: []
 dependencies: [philnewm.vscode]
